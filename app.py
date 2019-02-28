@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, jsonify
 import os
 from tf_idf import *
 import time
+#from bs4 import BeautifulSoup4
+
 # kernel = aiml.Kernel()
 
 # def load_kern(forcereload):
@@ -51,24 +53,24 @@ def ask():
 		#bot_response = kernel.respond(message)
 		# print bot_response
 	bot_response = previous_chats(message)
-	try:
-		c,conn = connection()
-		# sql="""INSERT INTO messages(msg_from_user,msg_to_user) VALUES('%s')""" % message
-		print("below query")
-		c.execute("INSERT INTO messages(msg_from_user,msg_to_user) VALUES(%s,%s)",(thwart(message),thwart(bot_response)))
-		print("i m in try block")
-		conn.commit()
-		print("inserted")
-		c.close()
-	except Exception as e:
-		print(e)
+	# try:
+	# 	c,conn = connection()
+	# 	# sql="""INSERT INTO messages(msg_from_user,msg_to_user) VALUES('%s')""" % message
+	# 	print("below query")
+	# 	c.execute("INSERT INTO messages(msg_from_user,msg_to_user) VALUES(%s,%s)",(thwart(message),thwart(bot_response)))
+	# 	print("i m in try block")
+	# 	conn.commit()
+	# 	print("inserted")
+	# 	c.close()
+	# except Exception as e:
+	# 	print(e)
 	#print(type(message))
 	#return message
-	time.sleep(1)
-	return jsonify({'status':'OK','answer':bot_response})
+	#time.sleep(1)
+	#status = bool(BeautifulSoup(bot_response, "html.parser").find());
+	return jsonify({'status':'ok','answer':bot_response})
 
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-

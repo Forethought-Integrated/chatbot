@@ -123,7 +123,23 @@
                 });
             }
         </script>
-      -->
+
+      <script type="text/javascript">
+        $(document).ready(function (){
+          $('#radiobtn').click(function(){
+            var result = $('input[type="radio"]:checked')
+            console.log(result);
+          });
+        });
+      </script>
+      <div class="selector-element">
+        <form method="post" id="form-chat2">
+          <input type="radio" name="hi" value="hi">hi</br>
+          <input type="radio" name="hi" value="hi">hello</br>
+          <input id="btn-chat2" type="submit" value="submit"/>
+        </form>
+      </div>
+    -->
 </div>
 </body>
 <script>
@@ -134,6 +150,8 @@ $(function(){
   });
     $("#form-chat").submit(function(event){
         event.preventDefault();
+        console.log("hello")
+        console.log(event)
         var pesan =$("#chatmessage").val();
         $( ".media-list" ).append('<li class="left clearfix"><span class="chat-img pull-left">\
                                 <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />\
@@ -141,12 +159,13 @@ $(function(){
                             <div class="chat-body clearfix">\
                                 <div class="header">\
                                     <strong class="primary-font">You</strong> <small class="pull-right text-muted">\
-                                        <span class="glyphicon glyphicon-time"></span>...time_function...</small>\
+                                        <span class="glyphicon glyphicon-time"></span>...time_function1...</small>\
                                     </div>\
                                     <p class="pull-right"><font color="blue">'+pesan+'</font></p>\
                                 </div>\
                             </li>');
         $(".panel-body").stop().animate({ scrollTop: $(".panel-body")[0].scrollHeight}, 1000);
+        console.log(event['eventPhase'])
         console.log($(this).serialize());
         $.ajax({
             type: "POST",
