@@ -15,18 +15,18 @@ import time
 # 		kernel.saveBrain("bot_brain.brn")
 #
 
-import MySQLdb
-from MySQLdb import escape_string as thwart
-def connection():
-	conn = MySQLdb.connect(host="localhost",
-	                       user = "root",
-	                       passwd = "",
-	                       db = "thpbot")
-	c = conn.cursor()
-	print("connection created")
-	return c, conn
+# import MySQLdb
+# from MySQLdb import escape_string as thwart
+# # def connection():
+# # 	conn = MySQLdb.connect(host="localhost",
+# # 	                       user = "root",
+# # 	                       passwd = "",
+# # 	                       db = "thpbot")
+# # 	c = conn.cursor()
+# # 	print("connection created")
+# # 	return c, conn
 
-
+# app.config['SECRET_KEY'] = 'thehigherpitch@123#'
 
 app = Flask(__name__)
 @app.route("/")

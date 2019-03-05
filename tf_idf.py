@@ -10,11 +10,11 @@ import timeit
 import random
 #import os
 import speech_recognition as sr
-from gtts import gTTS
+#from gtts import gTTS
 import os
 #import httplib,urllib
 import requests
-import webbrowser
+# import webbrowser
 import unicodedata
 
 def talk_to_cb_primary(test_set_sentence, minimum_score , json_file_path , tfidf_vectorizer_pikle_path ,tfidf_matrix_train_pikle_path):

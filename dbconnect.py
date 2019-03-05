@@ -1,9 +1,14 @@
-import MySQLdb
+# import MySQLdb
+#
+#
+# conn = MySQLdb.connect(
+#         host="localhost",
+#         user="forethought",
+#         passwd="123456",
+#         db="thpbot"
+#         )
+# c = conn.cursor()
+# print("connection created")
+# #return c, conn
 
-def connection():
-    conn = MySQLdb.connect(
-            host="localhost",
-            user="forethought",
-            passwd="123456",
-            db=""
-    )
+#a,b = connection()
