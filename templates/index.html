@@ -1,80 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>TheHigherPitch</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<html>
+<head>
+  <title>TheHigherPitch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static',filename='jquery.min.js')}}"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script>var synth = window.speechSynthesis;</script>
+
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+  <style>
+  body{
+    margin-left: 20%;
+    margin-right: 20%;}
+ .chat
+  {
+    list-style: none;
+    margin: auto auto auto auto;
+    padding: 25px auto 25px auto;
+}
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+    text-align: right;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+    text-align: right;
+}
 
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-        <script>
-          var socket = io.connect( 'http://' + document.domain + ':' + location.port )
-          // broadcast a message
-          socket.on( 'connect', function() {
-            socket.emit( 'my event', {
-              data: 'User Connected'
-            } )
-            var form = $( 'form' ).on( 'submit', function( e ) {
-              e.preventDefault()
-              let user_name = $( 'input.username' ).val()
-              let user_input = $( 'input.message' ).val()
-              socket.emit( 'my event', {
-                user_name : user_name,
-                message : user_input
-              } )
-              // empty the input field
-              $( 'input.message' ).val( '' ).focus()
-            } )
-          } )
-          // capture message
-          socket.on( 'my response', function( msg ) {
-            console.log( msg )
-            if( typeof msg.user_name !== 'undefined' ) {
-              $( 'h1' ).remove()
-              $( 'div.message_holder' ).append( '<div class="msg_bbl"><b style="color: #000">'+msg.bot_name+'</b> '+msg.message+'</div>' )
-            }
-          } )
-        </script>
-    <style>
-      div.msg_bbl {
-        background-color: #ddd;
-        padding: 5px 10px;
-        border-radius: 10px;
-        color: #555;
-        margin-bottom: 5px;
-      }
-    </style>
-  </head>
-  <body>
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
 
-    <div class="text-center well"><b>TheHigherPitch</b></div>
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
 
-    <div class="container">
-      <div class="col-sm-8">
-        <div class="no_message">
-          <h1 style='color: #ccc'>No message yet..</h1>
-          <div class="message_holder"></div>
+.panel-body
+{
+    overflow-y: scroll;
+    height: 250px;
+}
+.container{
+    padding-top: 70px;
+    width:100%;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a href="/" class="navbar-brand">Home</a>
+    <a href="/chat" class="navbar-brand">Mr. Pitch</a>
+</nav>
+<hr style="padding-top: 70px">
+<div id="chatPanel" class="panel panel-primary">
+<div class="panel-heading">
+<span class="glyphicon glyphicon-comment">TheHigherPitch</span>
+</div>
+<div class="panel-body" style="overflow-y: scroll;
+    height: 250px;" >
+    <div class="clearfix"></div>
+    <ul class="media-list">
+
+    </ul>
+</div>
+<div class="clearfix"></div>
+<div class="panel-footer">
+  <div class="clearfix"></div>
+    <form method="post" class="form-group" id="form-chat">
+
+        <div class="input-group">
+          <table >
+            <tr>
+              <td>
+                <input id="btn_query" type="button" onclick="startDictation()" value="Ask"
+                      style="font-family: Calibri"/>
+                <!-- <input id="btn_query" type="button" onclick="startDictation()" value="Ask"
+                     style="font-family: Calibri;" /> -->
+              </td>
+
+              <td>
+                <input type="text" id="chatmessage" name="chatmessage" class="form-control">
+              </td>
+              <td>
+                <span class="input-group-btn">
+                    <button type="button" class="btn-warning btn-sm col-10" id="btn-chat">Submit</button>
+                </span>
+              </td>
+            </tr>
+          </table>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <form action="" method="POST">
-          <b>Please Let us know your query<span class="glyphicon glyphicon-arrow-down"></span></b>
-          <div class="clearfix" style="margin-top: 5px;"></div>
-          <input type="text" class="username form-control" placeholder="User Name">
-          <div style="padding-top: 5px;"></div>
-          <input type="text" class="message form-control" placeholder="Messages">
-          <div style="padding-top: 5px;"></div>
-          <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-send"></span> Send</button>
-        </form>
-      </div>
-    </div>
+    </form>
+</div>
+</div>
 
-  </body>
+</body>
+
+<script>
+
+function startDictation() {
+    //document.getElementById('transcript').value = '';
+    //document.getElementById('output').value = '';
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = "en-US";
+        recognition.start();
+        recognition.onresult = function (e) {
+            //document.getElementById('loader').hidden = false;
+            //document.getElementById('transcript').value = e.results[0][0].transcript;
+            var recognized_speech = e.results[0][0].transcript;
+            recognition.stop();
+            var data = e.results[0][0].transcript;
+            console.log(e);
+            $( ".media-list" ).append('<li class="left clearfix"><span class="chat-img pull-left">\
+                                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />\
+                                </span>\
+                                <div class="chat-body clearfix">\
+                                    <div class="header">\
+                                        <strong class="primary-font">You</strong> <small class="pull-right text-muted">\
+                                        </div>\
+                                        <p class="pull-right"><font color="blue">'+data+'</font></p>\
+                                    </div>\
+                                </li>');
+            $(".panel-body").stop().animate({ scrollTop: $(".panel-body")[0].scrollHeight}, 1000);
+
+            $.post("/speech_page", { "data": data },
+            function (response) {
+            //document.getElementById('loader').hidden = true;
+                //console.log("vandit");
+                data = response;
+                console.log(data);
+                var answer = response.answer;
+                //console.log("vandit420");
+                console.log(answer);
+                const chatPanel = document.getElementById("chatPanel");
+                $(".media-list").append('<li class="right clearfix"><span class="chat-img pull-right">\
+                                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />\
+                            </span>\
+                            <div class="chat-body clearfix">\
+                                <div class="header">\
+                                    <strong class="pull-right primary-font">Mr. Pitch</strong>\
+                                </div>\
+                                <p class="pull-left"><font color ="red">'+answer+'</font></p>\
+                             </div>\
+                        </li>');
+
+
+              $(".panel-body").stop().animate({ scrollTop: $(".panel-body")[0].scrollHeight}, 1000);
+
+                synth.cancel();
+                var utterThis = new SpeechSynthesisUtterance(answer);
+                utterThis.voice = synth.getVoices()[0];
+                utterThis.pitch = 1.0;
+                utterThis.rate = 1.0;
+                utterThis.onerror = function(e) { console.log("Something went wrong with utterance."); };
+                synth.speak(utterThis);
+
+                //document.getElementById("output").value = data["urls"];
+            }).error(function (response) {
+            document.getElementById('loader').hidden = true;
+                if (response.status == 400)
+                    text = jQuery.parseJSON(response.responseText)["original_exception"];
+                else
+                    text = "I'm sorry. I did not get that.";
+                //document.getElementById("output").value = text;
+            });
+        };
+        recognition.onerror = function (e) {
+            recognition.stop();
+            console.log("Recognition had an error");
+        }
+    }
+}
+
+
+$(function(){
+    $( "#btn-chat" ).click(function( event ) {
+      event.preventDefault();
+      $("#form-chat").submit();
+  });
+    $("#form-chat").submit(function(event){
+        event.preventDefault();
+        console.log("hello");
+        console.log(event);
+        var pesan =$("#chatmessage").val();
+          //$("#chatmessage").val('Hi');
+          //console.log($(this).val('HI'));
+          //$('#chatmessage').attr('value','HI');
+          //console.log($("#chatmessage").val('HI'));
+          console.log(event);
+
+        $( ".media-list" ).append('<li class="left clearfix"><span class="chat-img pull-left">\
+                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />\
+                            </span>\
+                            <div class="chat-body clearfix">\
+                                <div class="header">\
+                                    <strong class="primary-font">You</strong> <small class="pull-right text-muted">\
+                                        <span class="glyphicon glyphicon-time"></span></small>\
+                                    </div>\
+                                    <p class="pull-right"><font color="blue">'+pesan+'</font></p>\
+                                </div>\
+                            </li>');
+        $(".panel-body").stop().animate({ scrollTop: $(".panel-body")[0].scrollHeight}, 1000);
+        //console.log(event['eventPhase']);
+
+        console.log($(this).serialize());
+        $.ajax({
+            type: "POST",
+            url: "/ask",
+            data: $(this).serialize(),
+            success: function(response) {
+                console.log(response);
+                $('#chatmessage').val('');
+                var answer = response.answer;
+                console.log($('#status').val(''));
+                var status = response.status;
+                console.log(status)
+                const chatPanel = document.getElementById("chatPanel");
+                $(".media-list").append('<li class="right clearfix"><span class="chat-img pull-right">\
+                                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />\
+                            </span>\
+                            <div class="chat-body clearfix">\
+                                <div class="header">\
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span></small>\
+                                    <strong class="pull-right primary-font">Mr. Pitch</strong>\
+                                </div>\
+                                <p class="pull-left"><font color ="red">'+answer+'</font></p>\
+                             </div>\
+                        </li>');
+
+
+              $(".panel-body").stop().animate({ scrollTop: $(".panel-body")[0].scrollHeight}, 1000);
+
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+console.log("111");
+    });
+console.log("112");
+});
+
+</script>
+
 </html>
