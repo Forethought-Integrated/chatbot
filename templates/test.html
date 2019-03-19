@@ -78,6 +78,11 @@
 
     </ul>
 </div>
+
+<div class="lower-class" style="height:50px">
+  <img src="static/loader.gif"  align="left" style="float: left" height="12px" width="12px" hidden="True"  id="loader" />
+</div>
+
 <div class="panel-footer">
     <form method="post" class="form-group" id="form-chat">
         <div class="input-group">
@@ -98,7 +103,8 @@ $(function(){
       $("#form-chat").submit();
   });
     $("#form-chat").submit(function(event){
-        event.preventDefault();
+        document.getElementById('loader').hidden = false;
+	event.preventDefault();
         console.log("hello")
         console.log(event)
         var pesan =$("#chatmessage").val();
@@ -121,7 +127,8 @@ $(function(){
             url: "/ask",
             data: $(this).serialize(),
             success: function(response) {
-                console.log(response)
+                document.getElementById('loader').hidden = true;
+		console.log(response)
                 $('#chatmessage').val('');
                 var answer = response.answer;
                 const chatPanel = document.getElementById("chatPanel");
