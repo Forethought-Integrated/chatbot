@@ -1,8 +1,12 @@
 [
 {
 	"message":"hi"
+<<<<<<< HEAD
 	,"response":"Hello Sir, What are you looking for."
 
+=======
+	,"response":"Hello Sir, What are you looking for?\n Market Strategy, Brand Experience or Marketing OutSourcing"
+>>>>>>> 40624429bf95869c93007e09e997dadb152ba6b0
 },
 
 {

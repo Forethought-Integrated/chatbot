@@ -14,7 +14,11 @@ import speech_recognition as sr
 import os
 #import httplib,urllib
 import requests
+<<<<<<< HEAD
 import webbrowser
+=======
+# import webbrowser
+>>>>>>> 40624429bf95869c93007e09e997dadb152ba6b0
 import unicodedata
 
 def talk_to_cb_primary(test_set_sentence, minimum_score , json_file_path , tfidf_vectorizer_pikle_path ,tfidf_matrix_train_pikle_path):
@@ -132,10 +136,23 @@ def previous_chats(query):
 
 #-----------------MAIN--CODE------------------#
 
+<<<<<<< HEAD
 #msg = input()
 #print(msg)
 #print (previous_chats(msg))
 
+=======
+
+def bot():
+    while 1:
+        sent = raw_input("Mr. Stud: ")
+        ans = previous_chats(sent)
+        ans2 = unicodedata.normalize('NFKD', ans).encode('ascii','ignore')
+        print(type(ans2))
+        print(ans2)
+        url = base_url + ans2
+        webbrowser.get(chrome_path).open(url)
+>>>>>>> 40624429bf95869c93007e09e997dadb152ba6b0
 #r = sr.Recognizer()
 #webbrowser.get(chrome_path).open(base_url)
 
