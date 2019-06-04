@@ -1,29 +1,4 @@
 [
-{
-	"message":"hi"
-	,"response":"Hello Sir, What are you looking for?\n Market Strategy, Brand Experience or Marketing OutSourcing"
-},
-
-{
-	"message":"What is your name:",
-	"response":"I'm Mr. Stud, How can I help you? "
-},
-
-{
-	"message": "I am looking for Marketing Outsourcing",
-	"response": "which of the following marketing activities would you be interested in pursuing? Design, Content search and Marketing, Social Media Programming, Communication and PR, Demand Generation, Enterprise Mobility"
-},
-
-
-{
-	"message": "Design",
-	"response": "Great to hear! Just a couple of more question."
-},
-
-{
-	"message": "xxx@gmail.com",
-	"response": "Thank you sir, Our representative will contact you shortly"
-},
 
 {
 	"message": "Tell me about theHigherpitch",
@@ -90,6 +65,7 @@
 {
 	"message": "Where it is located?",
 	"response": "303 Tower B, Logix Technova, plot A4 sector 132, Expressway Noida-India"
+
 }
 
 

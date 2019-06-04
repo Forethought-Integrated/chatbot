@@ -1,55 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{company_name}}</title>
+  <title>TheHigherPitch</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{url_for('static',filename='jquery.min.js')}}"></script>
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/custom.css')}}">
   <script type="text/javascript" src="{{url_for('static',filename='js/function.js')}}"></script>
+
 </head>
 <script type="text/javascript">
-  var count=2;
-  var lead = {};
-  var limit = {{count}};
+  var count=1;
+  var lead = [];
+  var limit = 4;
   var name,email,phone,company;
   var bot_name,bot_image,company_name,welcome_msg;
   bot_name = {{bot_name|tojson|safe}};
   bot_image = {{bot_image|tojson|safe}};
   welcome_msg = {{welcome_msg|tojson|safe}};
   console.log(welcome_msg);
-  var ques,option,response,value;
-  ques = {{ques|tojson|safe}};
-  option = {{option|safe}};
-  response = {{response|tojson|safe}};
-  value = {{value|tojson|safe}};
-  var bot_reply = '';
-  console.log(option);
-  var temp1 = "<div class='lower-class' style='height:50px'>\
-                  <img src='static/tenor.gif'  align='left' style='float: left' height='20px' width='20px' hidden='False'  id='loader'/>\
-              </div>";
+
 </script>
 <script type="text/javascript" src="{{url_for('static',filename='js/custom.js')}}"></script>
 <body>
-  <!-- <hr style="padding-top: 10px"> -->
+  <hr style="padding-top: 70px">
   <div id="chatPanel" class="panel panel-primary">
   <div class="panel-heading">
-  <span class="glyphicon glyphicon-comment">{{company_name}}</span>
+  <span class="glyphicon glyphicon-comment">TheHigherPitch</span>
   </div>
   <div class="panel-body" style="overflow-y: scroll;
-      height: 387px;">
+      height: 250px;">
       <div class="media-list">
 
         <!-- Messages got appended here -->
         <li>
 
+
         </li>
       </div>
   </div>
   <div class="panel-footer">
-      <form method="post" class="form-group" id="form-chat" autocomplete="off">
-          <div class="input-group" id="input-form">
+      <form method="post" class="form-group" id="form-chat">
+          <div class="input-group">
               <input type="text" id="chatmessage" name="chatmessage" class="form-control">
               <span class="input-group-btn">
                   <button type="button" class="btn-warning btn-sm col-10" id="btn-chat">Submit</button>

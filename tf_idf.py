@@ -14,7 +14,7 @@ import speech_recognition as sr
 import os
 #import httplib,urllib
 import requests
-# import webbrowser
+import webbrowser
 import unicodedata
 
 def talk_to_cb_primary(test_set_sentence, minimum_score , json_file_path , tfidf_vectorizer_pikle_path ,tfidf_matrix_train_pikle_path):
@@ -128,38 +128,16 @@ def previous_chats(query):
     tfidf_vectorizer_pikle_path = "data/previous_tfidf_vectorizer.pickle"
     tfidf_matrix_train_path = "data/previous_tfidf_matrix_train.pickle"
     query_response, score = talk_to_cb_primary(query , minimum_score , file , tfidf_vectorizer_pikle_path , tfidf_matrix_train_path)
-    return query_response
+    # print(query_response)
+    # print(quid)
+    return query_response,score
 
 #-----------------MAIN--CODE------------------#
-
-
-def bot():
-    while 1:
-        sent = raw_input("Mr. Stud: ")
-        ans = previous_chats(sent)
-        ans2 = unicodedata.normalize('NFKD', ans).encode('ascii','ignore')
-        print(type(ans2))
-        print(ans2)
-        url = base_url + ans2
-        webbrowser.get(chrome_path).open(url)
-#r = sr.Recognizer()
-#webbrowser.get(chrome_path).open(base_url)
-
-    # with sr.Microphone() as source:
-    #     print("Please say something: ")
-    #     audio = r.listen(source)
-    #     try:
-    #         text = r.recognize_google(audio)
-    #         print("you said: {}".format(text))
-    #         print("working")
-    #     except:
-    #         print('sorry try again')
-# import tkinter
-#
-#
-#
-#
-# if __name__ == '__main__':
-#     top = tkinter.Tk()
-#
-#     top.mainloop()
+# while True:
+#     msg = input("Please input your query! ")
+#     #print(msg)
+#     respond,score = previous_chats(msg)
+#     print("Bot Response: ",respond)
+#     temp = score*100
+#     # print(score)
+#     print(temp)
