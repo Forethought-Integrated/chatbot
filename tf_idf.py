@@ -9,7 +9,7 @@ import json
 import timeit
 import random
 #import os
-import speech_recognition as sr
+#import speech_recognition as sr
 #from gtts import gTTS
 import os
 #import httplib,urllib
